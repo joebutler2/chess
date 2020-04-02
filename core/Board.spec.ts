@@ -1,6 +1,7 @@
 import {Board} from "./Board";
 import Bishop from "./pieces/Bishop";
 import King from "./pieces/King";
+import NullPiece from "./pieces/NullPiece";
 import Knight from "./pieces/Knight";
 import Pawn from "./pieces/Pawn";
 import Queen from "./pieces/Queen";
@@ -17,6 +18,10 @@ describe("Board", () => {
     it("returns the piece at the specified position", () => {
       expect(board.at("a8")).toBeInstanceOf(Rook);
       expect(board.at("a7")).toBeInstanceOf(Pawn);
+    });
+
+    it("returns a NullPiece for blank positions", () => {
+      expect(board.at("a6")).toBeInstanceOf(NullPiece);
     });
 
     it("throws an error if column is invalid", () => {

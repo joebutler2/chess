@@ -7,7 +7,7 @@ describe("Game", () => {
   });
 
   it("should be able to log messages", () => {
-    const game = new Game(logger);
+    new Game(logger);
     expect(logger.log).toHaveBeenCalledWith("new game created");
   });
 });
