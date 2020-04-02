@@ -3,6 +3,7 @@ import King from "./pieces/King";
 import Knight from "./pieces/Knight";
 import Pawn from "./pieces/Pawn";
 import Piece from "./pieces/Piece";
+import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
 import Team from "./Team";
@@ -18,10 +19,10 @@ export class Board {
         new Knight(black), new Rook(black)],
       [new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black),
         new Pawn(black), new Pawn(black)],
-        new Array<Piece>(8),
-        new Array<Piece>(8),
-        new Array<Piece>(8),
-        new Array<Piece>(8),
+        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
+        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
+        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
+        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
       [new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white),
         new Pawn(white), new Pawn(white)],
       [new Rook(white), new Knight(white), new Bishop(white), new Queen(white), new King(white), new Bishop(white),
