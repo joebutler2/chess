@@ -1,18 +1,18 @@
-import Piece from "./pieces/Piece";
-import Pawn from "./pieces/Pawn";
-import Rook from "./pieces/Rook";
-import Knight from "./pieces/Knight";
 import Bishop from "./pieces/Bishop";
-import Queen from "./pieces/Queen";
 import King from "./pieces/King";
+import Knight from "./pieces/Knight";
+import Pawn from "./pieces/Pawn";
+import Piece from "./pieces/Piece";
+import Queen from "./pieces/Queen";
+import Rook from "./pieces/Rook";
 import Team from "./Team";
 
-export default class Board {
-  private pieces: Piece[][];
+export class Board {
+  public pieces: Piece[][];
   constructor() {
     // Workaround for enums in Typescript, not sure why it can't refer to the value directly.
-    let black: Team = Team.Black;
-    let white: Team = Team.White;
+    const black: Team = Team.Black;
+    const white: Team = Team.White;
     this.pieces = [
       [new Rook(black), new Knight(black), new Bishop(black), new Queen(black), new King(black), new Bishop(black),
         new Knight(black), new Rook(black)],
@@ -29,10 +29,14 @@ export default class Board {
     ];
   }
 
-  at(position: string): Piece {
-    const [rawColumn, rawRow] = position.toLowerCase().split("");
+  public at(position: string): Piece {
+    const [rawColumn, rawRow, ...overfill] = position.toLowerCase().split("");
     const row = 8 - parseInt(rawRow, 10);
-    if(!["a", "b", "c", "d", "e", "f", "g", "h"].includes(rawColumn)) {
+    if (row < 0 || row > 8 || overfill.length > 0 ) {
+      // Not completely accurate but a good enough assumption.
+      throw new Error("Invalid row. Please pick a number from 1 to 8.");
+    }
+    if (!["a", "b", "c", "d", "e", "f", "g", "h"].includes(rawColumn)) {
       throw new Error("Invalid column. Please pick from a, b, c, d, e, f, or h.");
     }
     const column = rawColumn.charCodeAt(0) - 97;

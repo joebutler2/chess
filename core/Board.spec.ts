@@ -1,11 +1,11 @@
-import Board from "./Board";
-import Team from "./Team";
-import Pawn from "./pieces/Pawn";
-import Rook from "./pieces/Rook";
-import Knight from "./pieces/Knight";
+import {Board} from "./Board";
 import Bishop from "./pieces/Bishop";
-import Queen from "./pieces/Queen";
 import King from "./pieces/King";
+import Knight from "./pieces/Knight";
+import Pawn from "./pieces/Pawn";
+import Queen from "./pieces/Queen";
+import Rook from "./pieces/Rook";
+import Team from "./Team";
 
 describe("Board", () => {
   describe(".at(position)", () => {
@@ -23,6 +23,12 @@ describe("Board", () => {
       expect(() => {
         board.at("z1");
       }).toThrowError("Invalid column. Please pick from a, b, c, d, e, f, or h.");
+    });
+
+    it("throws an error if row is invalid", () => {
+      expect(() => {
+        board.at("a10");
+      }).toThrowError("Invalid row. Please pick a number from 1 to 8.");
     });
   });
 
@@ -99,4 +105,3 @@ describe("Board", () => {
     });
   });
 });
-

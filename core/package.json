@@ -4,8 +4,11 @@
   "description": "Game logic for Chess that is not tied to a GUI.",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build" : "tsc",
+    "prepare": "npm run build"
   },
+  "files": ["dist/**/*"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -13,6 +16,7 @@
     "@types/node": "^13.9.8",
     "jest": "^25.2.4",
     "ts-jest": "^25.3.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "tslint": "^5.7.0"
   }
 }

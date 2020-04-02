@@ -1,5 +1,5 @@
 export interface Logger {
-  log: (message: string) => void
+  log: (message: string) => void;
 }
 
 export class Game {
@@ -7,4 +7,3 @@ export class Game {
     logger.log("new game created");
   }
 }
-

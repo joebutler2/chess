@@ -1,15 +1,12 @@
 {
+  "extends": "../tsconfig-base.json",
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "outDir": "../lib/core",
+    "rootDir": ".",
     "lib": ["es2015"],
-    "strict": true,
-    "declaration": true,
-    "outDir": "dist",
-    "sourceMap": true
+    "moduleResolution": "node"
   },
   "esModuleInterop": true,
-  "moduleResolution": "node",
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/**/*.spec.ts"]
+  "include": ["**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

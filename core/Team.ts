@@ -1,6 +1,6 @@
 enum Team {
   Black = "black",
-  White = "white"
+  White = "white",
 }
 
 export default Team;

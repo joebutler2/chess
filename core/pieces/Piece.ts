@@ -1,5 +1,5 @@
 import Team from "../Team";
 
 export default abstract class Piece {
-  constructor(public team: Team) {};
+  constructor(public team: Team) {}
 }
