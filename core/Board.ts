@@ -3,12 +3,13 @@ import King from "./pieces/King";
 import Knight from "./pieces/Knight";
 import Pawn from "./pieces/Pawn";
 import Piece from "./pieces/Piece";
+import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
 import Team from "./Team";
 
 export class Board {
-  public pieces: (Piece|null)[][];
+  public pieces: (Piece)[][];
   constructor() {
     // Workaround for enums in Typescript, not sure why it can't refer to the value directly.
     const black: Team = Team.Black;
@@ -18,10 +19,12 @@ export class Board {
         new Knight(black), new Rook(black)],
       [new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black),
         new Pawn(black), new Pawn(black)],
-        new Array(8).fill(null),
-        new Array(8).fill(null),
-        new Array(8).fill(null),
-        new Array(8).fill(null),
+
+        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
+        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
+        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
+        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
+
       [new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white),
         new Pawn(white), new Pawn(white)],
       [new Rook(white), new Knight(white), new Bishop(white), new Queen(white), new King(white), new Bishop(white),
@@ -29,7 +32,26 @@ export class Board {
     ];
   }
 
-  public at(position: string): Piece | null {
+  public at(position: string): Piece {
+    const [row, column] = this.convertToIndexes(position);
+    return this.pieces[row][column];
+  }
+
+  // TODO: refactor these arguments to be an object,
+  // would enable us to refactor to the momento pattern.
+  public move(targetPiece: string, destination: string): void {
+    const [row, column] = this.convertToIndexes(targetPiece);
+    const piece: Piece = this.pieces[row][column];
+    // Will need to add logic for handling objects.
+    // Doing the simplest thing that could work at the moment
+    // which most likely will have bugs or at least create
+    // unnecessary objects.
+    this.pieces[row][column] = new NullPiece();
+    const [destRow, destColumn] = this.convertToIndexes(destination);
+    this.pieces[destRow][destColumn] = piece;
+  }
+
+  private convertToIndexes(position: string): number[] {
     const [rawColumn, rawRow, ...overfill] = position.toLowerCase().split("");
     const row = 8 - parseInt(rawRow, 10);
     if (row < 0 || row > 8 || overfill.length > 0 ) {
@@ -40,6 +62,6 @@ export class Board {
       throw new Error("Invalid column. Please pick from a, b, c, d, e, f, or h.");
     }
     const column = rawColumn.charCodeAt(0) - 97;
-    return this.pieces[row][column];
+    return [row, column];
   }
 }
