@@ -7,3 +7,4 @@ export class Game {
     logger.log("new game created");
   }
 }
+

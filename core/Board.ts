@@ -3,13 +3,12 @@ import King from "./pieces/King";
 import Knight from "./pieces/Knight";
 import Pawn from "./pieces/Pawn";
 import Piece from "./pieces/Piece";
-import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
 import Team from "./Team";
 
 export class Board {
-  public pieces: Piece[][];
+  public pieces: (Piece|null)[][];
   constructor() {
     // Workaround for enums in Typescript, not sure why it can't refer to the value directly.
     const black: Team = Team.Black;
@@ -19,10 +18,10 @@ export class Board {
         new Knight(black), new Rook(black)],
       [new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black), new Pawn(black),
         new Pawn(black), new Pawn(black)],
-        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
-        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
-        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
-        new Array<Piece>(new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
+        new Array(8).fill(null),
       [new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white), new Pawn(white),
         new Pawn(white), new Pawn(white)],
       [new Rook(white), new Knight(white), new Bishop(white), new Queen(white), new King(white), new Bishop(white),
@@ -30,7 +29,7 @@ export class Board {
     ];
   }
 
-  public at(position: string): Piece {
+  public at(position: string): Piece | null {
     const [rawColumn, rawRow, ...overfill] = position.toLowerCase().split("");
     const row = 8 - parseInt(rawRow, 10);
     if (row < 0 || row > 8 || overfill.length > 0 ) {
