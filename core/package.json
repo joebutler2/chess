@@ -2,13 +2,13 @@
   "name": "core",
   "version": "1.0.0",
   "description": "Game logic for Chess that is not tied to a GUI.",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "build" : "tsc",
     "prepare": "npm run build"
   },
-  "files": ["lib/**/*"],
+  "files": ["dist/**/*"],
   "author": "",
   "license": "ISC",
   "devDependencies": {

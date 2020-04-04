@@ -14,7 +14,6 @@ export default class ChessBoard extends React.Component<Props, {}> {
 
   constructor(props: Props) {
     super(props);
-
     this.board = new Board();
     this.game = new Game(this.board);
     console.log(this.board.pieces);

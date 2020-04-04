@@ -22,6 +22,11 @@ describe("Pawn", () => {
       it("moves down one space diagonally if there is an enemy in that spot.", () => {
         expect(pawn.canMoveTo(3, 1, 4, 2, new Bishop())).toBe(true);
       });
+
+      it("does not move up by 2 spaces if it's not in the starting position", () => {
+        expect(pawn.canMoveTo(1, 1, 2, 1, new NullPiece())).toBe(true);
+        expect(pawn.canMoveTo(2, 1, 4, 1, new NullPiece())).toBe(false);
+      });
     });
 
     describe("White team", () => {
@@ -40,6 +45,11 @@ describe("Pawn", () => {
 
       it("moves up one space diagonally if there is an enemy in that spot.", () => {
         expect(pawn.canMoveTo(4, 1, 3, 2, new Bishop())).toBe(true);
+      });
+
+      it("does not move up by 2 spaces if it's not in the starting position", () => {
+        expect(pawn.canMoveTo(6, 1, 5, 1, new NullPiece())).toBe(true);
+        expect(pawn.canMoveTo(5, 1, 3, 1, new NullPiece())).toBe(false);
       });
 
     });
