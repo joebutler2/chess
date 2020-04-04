@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App-logo {
+  width: 200px;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+table.chessboard {
+  font-size: 2em;
+  margin-bottom: 50px;
+  tr {
+    td {
+      &.black-bg {
+        background-color: #333;
+      }
+      &.white-bg {
+        background-color: #ccc;
+      }
+      &.selected {
+        border: 2px solid #fff;
+      }
+      cursor: grab;
+      -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+      height: 1.5em;
+      width: 1.5em;
+      box-sizing: border-box;
+      color: #000;
+    }
+  }
+}
+
