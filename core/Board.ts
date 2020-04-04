@@ -42,13 +42,20 @@ export class Board {
   public move(targetPiece: string, destination: string): void {
     const [row, column] = this.convertToIndexes(targetPiece);
     const piece: Piece = this.pieces[row][column];
-    // Will need to add logic for handling objects.
-    // Doing the simplest thing that could work at the moment
-    // which most likely will have bugs or at least create
-    // unnecessary objects.
-    this.pieces[row][column] = new NullPiece();
     const [destRow, destColumn] = this.convertToIndexes(destination);
-    this.pieces[destRow][destColumn] = piece;
+    // On the fence about this throwing an error,
+    // it is not an exceptional case. This is plain validation.
+    // Leave it as is for now since it's simple.
+    if (piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn])) {
+      // Will need to add logic for handling objects.
+      // Doing the simplest thing that could work at the moment
+      // which most likely will have bugs or at least create
+      // unnecessary objects.
+      this.pieces[row][column] = new NullPiece();
+      this.pieces[destRow][destColumn] = piece;
+    } else {
+      throw new Error(`A ${piece.constructor.name} cannot move there.`);
+    }
   }
 
   private convertToIndexes(position: string): number[] {

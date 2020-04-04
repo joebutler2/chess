@@ -38,11 +38,17 @@ describe("Playing a Game of Chess", () => {
       toThrow("Player 2 can only move black pieces.");
     });
 
-    it.todo("should raise an error if the player tries to move nothing, i.e. a NullPiece");
+    it("should raise an error if the player tries to move nothing, i.e. a NullPiece", () => {
+      const game = new Game(board);
+      expect(() => game.player1Move("a3", "a4")).
+        toThrow("Player 1: there is no piece there.");
+      game.player1Move("a2", "a3");
+      expect(() => game.player2Move("a6", "a5")).
+        toThrow("Player 2: there is no piece there.");
+    });
   });
 
   it("should move the piece to the destination spot", () => {
-
     const game = new Game(board);
     game.player1Move("a2", "a3");
     expect(board.at("a3")).toBeInstanceOf(Pawn);
@@ -52,7 +58,11 @@ describe("Playing a Game of Chess", () => {
     expect(board.at("a6").team).toBe(Team.Black);
   });
 
-  it.todo("should throw an error if the destination spot is not valid");
-  it.todo("should throw an error if the targetPiece is not a valid spot");
+  it("should throw an error if the destination spot is not valid", () => {
+    const game = new Game(board);
+    // The pawn is trying to move up 3 spaces.
+    expect(() => game.player1Move("a2", "a5")).
+      toThrow("A Pawn cannot move there.");
+  });
 });
 
