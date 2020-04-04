@@ -9,6 +9,12 @@ export default class Pawn extends Piece {
   }
 
   canMoveTo(row: number, column: number, destRow: number, destColumn: number, targetPiece: Piece): boolean {
+    if (this.team === Team.White && destRow - row > 0) {
+      return false;
+    }
+    if (this.team === Team.Black && destRow - row < 0) {
+      return false;
+    }
     const rowDelta = Math.abs(destRow - row);
     const columnDelta = Math.abs(destColumn - column);
     if (targetPiece instanceof NullPiece && column === destColumn) {
@@ -21,10 +27,15 @@ export default class Pawn extends Piece {
       // how this class is use.
       this.initialMove = false;
       return isMoveable || rowDelta === 1;
-    } else if (targetPiece.team !== this.team) { // Any actual piece.
+    } else if (this.isOpposingTeam(targetPiece)) {
       return rowDelta === 1 && columnDelta === 1;
 
     }
     return false;
+  }
+
+  private isOpposingTeam(targetPiece: Piece): boolean {
+    return targetPiece.team !== this.team &&
+      targetPiece.team !== Team.Null;
   }
 }
