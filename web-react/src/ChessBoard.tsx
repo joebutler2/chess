@@ -75,6 +75,10 @@ export default class ChessBoard extends React.Component<Props, {}> {
       }
     } catch(error) {
       this.message = error.message;
+      setTimeout(() => {
+        this.message = "";
+        this.forceUpdate(); // Not elegant.
+      }, 2000);
     }
   }
 }
