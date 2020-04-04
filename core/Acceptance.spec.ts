@@ -64,5 +64,13 @@ describe("Playing a Game of Chess", () => {
     expect(() => game.player1Move("a2", "a5")).
       toThrow("A Pawn cannot move there.");
   });
+
+  it("should throw an error if the destination is the player's own piece", ()  => {
+    const game = new Game(board);
+    game.player1Move("a2", "a3");
+    game.player2Move("a7", "a6");
+    expect(() => game.player1Move("b1", "a3")).
+      toThrow("You cannot move onto your own piece.");
+  });
 });
 

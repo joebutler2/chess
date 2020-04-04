@@ -46,7 +46,9 @@ export class Board {
     // On the fence about this throwing an error,
     // it is not an exceptional case. This is plain validation.
     // Leave it as is for now since it's simple.
-    if (piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn])) {
+    if (piece.team === this.pieces[destRow][destColumn].team) {
+      throw new Error("You cannot move onto your own piece.");
+    } else if (piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn])) {
       // Will need to add logic for handling objects.
       // Doing the simplest thing that could work at the moment
       // which most likely will have bugs or at least create
