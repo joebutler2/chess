@@ -19,23 +19,15 @@ export default class RookMoveSetEngine {
   public canMoveTo(row: number, column: number, destRow: number, destColumn: number): boolean {
     const team = this.pieces[row][column].team;
     if (column === destColumn) {
-      if (row > destRow) { // Moving Down.
-        for (let i = row - 1; i >= destRow; i--) {
-          if (i === destRow && team !== this.pieces[i][column].team) {
-            return true;
-          }
-          if (!(this.pieces[i][column] instanceof NullPiece)) {
-            return false;
-          }
+      const iterable = row > destRow
+        ? new MoveUpIterable(row, destRow)
+        : new MoveDownIterable(row, destRow);
+      for (const i of iterable) {
+        if (i === destRow && team !== this.pieces[i][column].team) {
+          return true;
         }
-      } else { // Moving Up.
-        for (let i = row + 1; i <= destRow; i++) {
-          if (i === destRow && team !== this.pieces[i][column].team) {
-            return true;
-          }
-          if (!(this.pieces[i][column] instanceof NullPiece)) {
-            return false;
-          }
+        if (!(this.pieces[i][column] instanceof NullPiece)) {
+          return false;
         }
       }
     } else if (row === destRow) {
@@ -62,3 +54,44 @@ export default class RookMoveSetEngine {
     return false;
   }
 }
+
+class MoveUpIterable implements Iterable<number> {
+  constructor(private index: number, private destRow: number) {}
+
+  public [Symbol.iterator](): MoveUpIterator {
+    return new MoveUpIterator(this.index, this.destRow);
+  }
+}
+
+class MoveUpIterator implements Iterator<number> {
+  constructor(private index: number, private destRow: number) {}
+
+  public next(): IteratorResult<number> {
+    this.index--;
+    return {
+      done: this.index < this.destRow,
+      value: this.index,
+    };
+  }
+}
+
+class MoveDownIterable implements Iterable<number> {
+  constructor(private index: number, private destRow: number) {}
+
+  public [Symbol.iterator](): MoveDownIterator {
+    return new MoveDownIterator(this.index, this.destRow);
+  }
+}
+
+class MoveDownIterator implements Iterator<number> {
+  constructor(private index: number, private destRow: number) {}
+
+  public next(): IteratorResult<number> {
+    this.index++;
+    return {
+      done: this.index > this.destRow,
+      value: this.index,
+    };
+  }
+}
+

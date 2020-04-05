@@ -10,7 +10,8 @@
     // See https://github.com/microsoft/TypeScript/issues/35961 for more info.
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "downlevelIteration": true
   },
   "include": ["**/*"],
   "exclude": ["node_modules", "**/*.spec.ts", "dist"]
