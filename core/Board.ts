@@ -6,6 +6,7 @@ import Piece from "./pieces/Piece";
 import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
+import RookMoveSetEngine from "./RookMoveSetEngine";
 import Team from "./Team";
 
 export class Board {
@@ -49,12 +50,19 @@ export class Board {
     const [row, column] = this.convertToIndexes(targetPiece);
     const piece: Piece = this.pieces[row][column];
     const [destRow, destColumn] = this.convertToIndexes(destination);
+    let isLegalMove: boolean;
+    if (piece instanceof Rook) {
+      const moveSet = new RookMoveSetEngine(this.pieces);
+      isLegalMove = moveSet.canMoveTo(row, column, destRow, destColumn);
+    } else {
+      isLegalMove = piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn]);
+    }
     // On the fence about this throwing an error,
     // it is not an exceptional case. This is plain validation.
     // Leave it as is for now since it's simple.
     if (piece.team === this.pieces[destRow][destColumn].team) {
       throw new Error("You cannot move onto your own piece.");
-    } else if (piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn])) {
+    } else if (isLegalMove) {
       if (this.pieces[destRow][destColumn] instanceof King) {
         this.gameOver = true;
       }
