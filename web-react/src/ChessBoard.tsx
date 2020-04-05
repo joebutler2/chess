@@ -1,9 +1,12 @@
 import React from 'react';
-import { Board, Piece, Game } from "core";
+import { Board, Piece, Game, GUI } from "core";
 
 type Props = {
 }
-export default class ChessBoard extends React.Component<Props, {}> {
+export default class ChessBoard
+  extends React.Component<Props, {}>
+  implements GUI
+  {
   private board: Board;
   private game: Game;
   private selectedPiece: Piece | null = null;
@@ -11,12 +14,23 @@ export default class ChessBoard extends React.Component<Props, {}> {
   private selectedTableCell: HTMLTableDataCellElement | null = null;
   private message: string = "";
   private currentPlayersTurn = 1;
+  private gameRunning: boolean = true;
 
   constructor(props: Props) {
     super(props);
     this.board = new Board();
-    this.game = new Game(this.board);
+    this.game = new Game(this.board, this);
     console.log(this.board.pieces);
+  }
+
+  player1Wins() {
+    this.gameRunning = false;
+    this.message = "Player 1 wins";
+  }
+
+  player2Wins() {
+    this.gameRunning = false;
+    this.message = "Player 2 wins";
   }
 
   render() {
@@ -36,7 +50,7 @@ export default class ChessBoard extends React.Component<Props, {}> {
                 backgroundClasses[(columnIndex + backgroundOffset) % 2],
                 `position-${position}`
               ].join(" ")}
-              onClick={event => this.selectPiece(event, piece, position)}>
+              onClick={this.gameRunning ? event => this.selectPiece(event, piece, position) : () => null}>
                 {piece?.icon ? piece.icon : 'foo'}
               </td>
           })

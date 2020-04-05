@@ -10,6 +10,12 @@ import Team from "./Team";
 
 export class Board {
   public pieces: (Piece)[][];
+  private gameOver: boolean = false;
+
+  get isGameOver(): boolean {
+    return this.gameOver;
+  }
+
   constructor() {
     // Workaround for enums in Typescript, not sure why it can't refer to the value directly.
     const black: Team = Team.Black;
@@ -49,6 +55,9 @@ export class Board {
     if (piece.team === this.pieces[destRow][destColumn].team) {
       throw new Error("You cannot move onto your own piece.");
     } else if (piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn])) {
+      if (this.pieces[destRow][destColumn] instanceof King) {
+        this.gameOver = true;
+      }
       // Will need to add logic for handling objects.
       // Doing the simplest thing that could work at the moment
       // which most likely will have bugs or at least create

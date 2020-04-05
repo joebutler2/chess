@@ -1,4 +1,5 @@
 import Team from "./Team";
+import GUI from "./GUI";
 import {Board} from "./Board";
 
 export class Game {
@@ -6,9 +7,11 @@ export class Game {
   // Funny that we don't even need a Player class yet.
   private turn: number = 1;
   private board: Board;
+  private gui: GUI;
 
-  constructor(board: Board) {
+  constructor(board: Board, gui: GUI) {
     this.board = board;
+    this.gui = gui;
   }
 
   public player1Move(targetPiece: string, destination: string): void {
@@ -23,6 +26,9 @@ export class Game {
       throw new Error(message);
     }
     this.board.move(targetPiece, destination);
+    if (this.board.isGameOver) {
+      this.gui.player1Wins();
+    }
     this.turn = 2;
   }
 
@@ -38,6 +44,9 @@ export class Game {
       throw new Error(message);
     }
     this.board.move(targetPiece, destination);
+    if (this.board.isGameOver) {
+      this.gui.player2Wins();
+    }
     this.turn = 1;
   }
 }
