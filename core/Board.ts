@@ -6,12 +6,17 @@ import Piece from "./pieces/Piece";
 import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
-import RookMoveSetEngine from "./RookMoveSetEngine";
+import RookMoveSetEngine from "./movement/RookMoveSetEngine";
+import MoveSetEngine from "./movement/MoveSetEngine";
 import Team from "./Team";
 
+interface MoveSets {
+  [name: string]: MoveSetEngine;
+}
 export class Board {
   public pieces: (Piece)[][];
   private gameOver: boolean = false;
+  private moveSets: MoveSets;
 
   get isGameOver(): boolean {
     return this.gameOver;
@@ -37,6 +42,9 @@ export class Board {
       [new Rook(white), new Knight(white), new Bishop(white), new Queen(white), new King(white), new Bishop(white),
         new Knight(white), new Rook(white)],
     ];
+    this.moveSets = {
+      "RookMoveSetEngine": new RookMoveSetEngine(this.pieces)
+    };
   }
 
   public at(position: string): Piece {
@@ -52,8 +60,7 @@ export class Board {
     const [destRow, destColumn] = this.convertToIndexes(destination);
     let isLegalMove: boolean;
     if (piece instanceof Rook) {
-      const moveSet = new RookMoveSetEngine(this.pieces);
-      isLegalMove = moveSet.canMoveTo(row, column, destRow, destColumn);
+      isLegalMove = this.moveSets[piece.moveSet].canMoveTo(row, column, destRow, destColumn);
     } else {
       isLegalMove = piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn]);
     }

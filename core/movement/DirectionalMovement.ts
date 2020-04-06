@@ -1,29 +1,14 @@
-import Piece from "./pieces/Piece";
-import Team from "./Team";
-import NullPiece from "./pieces/NullPiece";
+import Piece from "../pieces/Piece";
+import Team from "../Team";
+import NullPiece from "../pieces/NullPiece";
 
-export default class RookMoveSetEngine {
-  constructor(private pieces: Piece[][]) {
-  }
-
-  // This method is terrible: the cyclomatic complexity is too high,
-  // there are duplicated statements, it's too long, a high number
-  // of arguments too. Sadly at this time there is too much churn
-  // to do anything about it. Also the remedy might be worst.
-  //
-  // It's looking like these arguments will be refactored into
-  // their own object. Based on the body I could see another class
-  // being created that has instance variables for these arguments.
-  public canMoveTo(row: number, column: number, destRow: number, destColumn: number): boolean {
-    return new DirectionalMovement(this.pieces, row, column, destRow, destColumn).execute();
-  }
-}
-
-class DirectionalMovement {
+export default class DirectionalMovement {
   team: Team;
   iterable?: Iterable<MovementIteratorResult>;
   destination: number;
 
+  // This constructor is weak, the cyclomatic complexity is fairly high,
+  // there are a large number of statements, and there are too many arguments.
   constructor(private pieces: Piece[][],
     row: number, column: number, destRow: number, destColumn: number) {
       this.team = this.pieces[row][column].team;

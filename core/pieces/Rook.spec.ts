@@ -2,8 +2,8 @@ import Rook from "./Rook";
 import Team from "../Team";
 import Pawn from "./Pawn";
 import Piece from "./Piece";
-import NullPiece from "./NullPiece";
-import RookMoveSetEngine from "../RookMoveSetEngine";
+import RookMoveSetEngine from "../movement/RookMoveSetEngine";
+import {createNullPieces} from "../TestUtils";
 
 describe("Rook", () => {
   let pieces: Piece[][];
@@ -71,16 +71,4 @@ describe("Rook", () => {
     expect(moveSetEngine.canMoveTo(0, 0, 5, 0)).toBe(true);
   });
 
-  function createNullPieces(): Piece[][] {
-    return [
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-        [new NullPiece(), new NullPiece(),  new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece(), new NullPiece()],
-    ];
-  }
 });
