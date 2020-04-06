@@ -1,4 +1,5 @@
 import Piece from "./pieces/Piece";
+import Team from "./Team";
 import NullPiece from "./pieces/NullPiece";
 
 export default class RookMoveSetEngine {
@@ -14,32 +15,46 @@ export default class RookMoveSetEngine {
   // their own object. Based on the body I could see another class
   // being created that has instance variables for these arguments.
   public canMoveTo(row: number, column: number, destRow: number, destColumn: number): boolean {
-    const team = this.pieces[row][column].team;
-    let iterable;
-    let destination;
-    if (column === destColumn) {
-      destination = destRow;
-      iterable = row > destRow
-        ? new MoveUpIterable(row, column, destRow)
-        : new MoveDownIterable(row, column, destRow);
-    } else if (row === destRow) {
-      destination = destColumn;
-      iterable = column > destColumn
-        ? new MoveLeftIterable(row, column, destColumn)
-        : new MoveRightIterable(row, column, destColumn);
-    } else {
+    return new DirectionalMovement(this.pieces, row, column, destRow, destColumn).execute();
+  }
+}
+
+class DirectionalMovement {
+  team: Team;
+  iterable?: Iterable<MovementIteratorResult>;
+  destination: number;
+
+  constructor(private pieces: Piece[][],
+    row: number, column: number, destRow: number, destColumn: number) {
+      this.team = this.pieces[row][column].team;
+      if (column === destColumn) {
+        this.destination = destRow;
+        this.iterable = row > destRow
+          ? new MoveUpIterable(row, column, destRow)
+          : new MoveDownIterable(row, column, destRow);
+      } else if (row === destRow) {
+        this.destination = destColumn;
+        this.iterable = column > destColumn
+          ? new MoveLeftIterable(row, column, destColumn)
+          : new MoveRightIterable(row, column, destColumn);
+      } else {
+        this.destination = -1;
+        this.iterable = undefined;
+      }
+  }
+
+  execute(): boolean {
+    if (!this.iterable) {
       return false;
     }
-
-    for (const {index, row: curRow, column: curColumn} of iterable) {
-      if (index === destination && team !== this.pieces[curRow][curColumn].team) {
+    for (const {index, row: curRow, column: curColumn} of this.iterable) {
+      if (index === this.destination && this.team !== this.pieces[curRow][curColumn].team) {
         return true;
       }
       if (!(this.pieces[curRow][curColumn] instanceof NullPiece)) {
         return false;
       }
     }
-
     return false;
   }
 }
