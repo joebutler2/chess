@@ -12,10 +12,7 @@ export default class RookMoveSetEngine {
   //
   // It's looking like these arguments will be refactored into
   // their own object. Based on the body I could see another class
-  // being created that has instance variables for these arguments
-  // and maybe using the Iterator Pattern (Gang of Four) so we can
-  // swap out the iterator class depending on which direction the
-  // player is moving.
+  // being created that has instance variables for these arguments.
   public canMoveTo(row: number, column: number, destRow: number, destColumn: number): boolean {
     const team = this.pieces[row][column].team;
     let iterable;
@@ -47,33 +44,29 @@ export default class RookMoveSetEngine {
   }
 }
 
-class MoveLeftIterable implements Iterable<MovementIteratorResult> {
-  constructor(private row: number,
-              private index: number,
-              private destColumn: number) {}
-
-  public [Symbol.iterator](): MoveLeftIterator {
-    return new MoveLeftIterator(this.row, this.index, this.destColumn);
-  }
-}
-
 interface MovementIteratorResult {
   index: number;
   row: number;
   column: number;
 }
 
-class MoveLeftIterator implements Iterator<MovementIteratorResult> {
+class MoveLeftIterable implements Iterable<MovementIteratorResult> {
   constructor(private row: number,
               private index: number,
               private destColumn: number) {}
 
-  public next(): IteratorResult<MovementIteratorResult> {
-    this.index--;
+  public [Symbol.iterator]() {
+    const {row, destColumn} = this;
+    let {index} = this;
     return {
-      done: this.index < this.destColumn,
-      value: {index: this.index, row: this.row, column: this.index},
-    };
+      next(): IteratorResult<MovementIteratorResult> {
+        index--;
+        return {
+          done: index < destColumn,
+          value: {index, row, column: index},
+        };
+      }
+    }
   }
 }
 
@@ -82,22 +75,18 @@ class MoveRightIterable implements Iterable<MovementIteratorResult> {
               private index: number,
               private destColumn: number) {}
 
-  public [Symbol.iterator](): MoveRightIterator {
-    return new MoveRightIterator(this.row, this.index, this.destColumn);
-  }
-}
-
-class MoveRightIterator implements Iterator<MovementIteratorResult> {
-  constructor(private row: number,
-              private index: number,
-              private destColumn: number) {}
-
-  public next(): IteratorResult<MovementIteratorResult> {
-    this.index++;
+  public [Symbol.iterator]() {
+    const {row, destColumn} = this;
+    let {index} = this;
     return {
-      done: this.index > this.destColumn,
-      value: {index: this.index, row: this.row, column: this.index},
-    };
+      next(): IteratorResult<MovementIteratorResult> {
+        index++;
+        return {
+          done: index > destColumn,
+          value: {index, row, column: index},
+        };
+      }
+    }
   }
 }
 
@@ -106,22 +95,18 @@ class MoveUpIterable implements Iterable<MovementIteratorResult> {
               private column: number,
               private destRow: number) {}
 
-  public [Symbol.iterator](): MoveUpIterator {
-    return new MoveUpIterator(this.index, this.column, this.destRow);
-  }
-}
-
-class MoveUpIterator implements Iterator<MovementIteratorResult> {
-  constructor(private index: number,
-              private column: number,
-              private destRow: number) {}
-
-  public next(): IteratorResult<MovementIteratorResult> {
-    this.index--;
+  public [Symbol.iterator]() {
+    const {column, destRow} = this;
+    let {index} = this;
     return {
-      done: this.index < this.destRow,
-      value: {index: this.index, row: this.index, column: this.column},
-    };
+      next(): IteratorResult<MovementIteratorResult> {
+        index--;
+        return {
+          done: index < destRow,
+          value: {index: index, row: index, column: column},
+        };
+      }
+    }
   }
 }
 
@@ -130,21 +115,17 @@ class MoveDownIterable implements Iterable<MovementIteratorResult> {
               private column: number,
               private destRow: number) {}
 
-  public [Symbol.iterator](): MoveDownIterator {
-    return new MoveDownIterator(this.index, this.column, this.destRow);
-  }
-}
-
-class MoveDownIterator implements Iterator<MovementIteratorResult> {
-  constructor(private index: number,
-              private column: number,
-              private destRow: number) {}
-
-  public next(): IteratorResult<MovementIteratorResult> {
-    this.index++;
+  public [Symbol.iterator]() {
+    const {column, destRow} = this;
+    let {index} = this;
     return {
-      done: this.index > this.destRow,
-      value: {index: this.index, row: this.index, column: this.column},
-    };
+      next(): IteratorResult<MovementIteratorResult> {
+        index++;
+        return {
+          done: index > destRow,
+          value: {index: index, row: index, column: column},
+        };
+      }
+    }
   }
 }
