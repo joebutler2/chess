@@ -3,9 +3,9 @@ import Team from "../Team";
 import NullPiece from "../pieces/NullPiece";
 
 export default class DirectionalMovement {
-  team: Team;
-  iterable?: Iterable<MovementIteratorResult>;
-  destination: number;
+  private team: Team;
+  private iterable?: Iterable<MovementIteratorResult>;
+  private destination: number;
 
   // This constructor is weak, the cyclomatic complexity is fairly high,
   // there are a large number of statements, and there are too many arguments.

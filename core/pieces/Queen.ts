@@ -7,6 +7,6 @@ export default class Queen extends Piece {
   }
 
   get moveSet(): string {
-    return "";
+    return "QueenMoveSetEngine";
   }
 }

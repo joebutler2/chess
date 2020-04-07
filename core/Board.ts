@@ -11,6 +11,7 @@ import BishopMoveSetEngine from "./movement/BishopMoveSetEngine";
 import KingMoveSetEngine from "./movement/KingMoveSetEngine";
 import KnightMoveSetEngine from "./movement/KnightMoveSetEngine";
 import PawnMoveSetEngine from "./movement/PawnMoveSetEngine";
+import QueenMoveSetEngine from "./movement/QueenMoveSetEngine";
 import MoveSetEngine from "./movement/MoveSetEngine";
 import Team from "./Team";
 
@@ -51,6 +52,7 @@ export class Board {
       KingMoveSetEngine: new KingMoveSetEngine(),
       KnightMoveSetEngine: new KnightMoveSetEngine(),
       PawnMoveSetEngine: new PawnMoveSetEngine(this.pieces),
+      QueenMoveSetEngine: new QueenMoveSetEngine(this.pieces),
       RookMoveSetEngine: new RookMoveSetEngine(this.pieces),
     };
   }
