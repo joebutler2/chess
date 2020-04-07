@@ -3,4 +3,6 @@ dist/
 yarn-error.log
 tags
 .DS_Store
+*.iml
+.idea/
 
