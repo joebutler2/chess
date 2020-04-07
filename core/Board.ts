@@ -7,6 +7,7 @@ import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
 import RookMoveSetEngine from "./movement/RookMoveSetEngine";
+import BishopMoveSetEngine from "./movement/BishopMoveSetEngine";
 import KingMoveSetEngine from "./movement/KingMoveSetEngine";
 import KnightMoveSetEngine from "./movement/KnightMoveSetEngine";
 import PawnMoveSetEngine from "./movement/PawnMoveSetEngine";
@@ -46,6 +47,7 @@ export class Board {
         new Knight(white), new Rook(white)],
     ];
     this.moveSets = {
+      BishopMoveSetEngine: new BishopMoveSetEngine(this.pieces),
       KingMoveSetEngine: new KingMoveSetEngine(),
       KnightMoveSetEngine: new KnightMoveSetEngine(),
       PawnMoveSetEngine: new PawnMoveSetEngine(this.pieces),

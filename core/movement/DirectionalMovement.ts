@@ -28,7 +28,7 @@ export default class DirectionalMovement {
       }
   }
 
-  execute(): boolean {
+  public execute(): boolean {
     if (!this.iterable) {
       return false;
     }

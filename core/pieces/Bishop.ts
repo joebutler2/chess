@@ -7,6 +7,6 @@ export default class Bishop extends Piece {
   }
 
   get moveSet(): string {
-    return "";
+    return "BishopMoveSetEngine";
   }
 }
