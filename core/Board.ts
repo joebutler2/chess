@@ -7,6 +7,9 @@ import NullPiece from "./pieces/NullPiece";
 import Queen from "./pieces/Queen";
 import Rook from "./pieces/Rook";
 import RookMoveSetEngine from "./movement/RookMoveSetEngine";
+import KingMoveSetEngine from "./movement/KingMoveSetEngine";
+import KnightMoveSetEngine from "./movement/KnightMoveSetEngine";
+import PawnMoveSetEngine from "./movement/PawnMoveSetEngine";
 import MoveSetEngine from "./movement/MoveSetEngine";
 import Team from "./Team";
 
@@ -43,7 +46,10 @@ export class Board {
         new Knight(white), new Rook(white)],
     ];
     this.moveSets = {
-      "RookMoveSetEngine": new RookMoveSetEngine(this.pieces)
+      KingMoveSetEngine: new KingMoveSetEngine(),
+      KnightMoveSetEngine: new KnightMoveSetEngine(),
+      PawnMoveSetEngine: new PawnMoveSetEngine(this.pieces),
+      RookMoveSetEngine: new RookMoveSetEngine(this.pieces),
     };
   }
 
@@ -58,12 +64,7 @@ export class Board {
     const [row, column] = this.convertToIndexes(targetPiece);
     const piece: Piece = this.pieces[row][column];
     const [destRow, destColumn] = this.convertToIndexes(destination);
-    let isLegalMove: boolean;
-    if (piece instanceof Rook) {
-      isLegalMove = this.moveSets[piece.moveSet].canMoveTo(row, column, destRow, destColumn);
-    } else {
-      isLegalMove = piece.canMoveTo(row, column, destRow, destColumn, this.pieces[destRow][destColumn]);
-    }
+    const isLegalMove: boolean = this.moveSets[piece.moveSet].canMoveTo(row, column, destRow, destColumn);
     // On the fence about this throwing an error,
     // it is not an exceptional case. This is plain validation.
     // Leave it as is for now since it's simple.

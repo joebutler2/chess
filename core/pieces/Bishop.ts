@@ -6,7 +6,7 @@ export default class Bishop extends Piece {
     return this.team === Team.Black ? "♝" : "♗";
   }
 
-  public canMoveTo(row: number, column: number, destRow: number, destColumn: number, targetPiece: Piece): boolean {
-    return row + column + destRow + destColumn > 1 && !!targetPiece;
+  get moveSet(): string {
+    return "";
   }
 }

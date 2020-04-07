@@ -1,73 +1,107 @@
 import Pawn from "./Pawn";
 import Bishop from "./Bishop";
-import NullPiece from "./NullPiece";
+import Piece from "./Piece";
 import Team from "../Team";
+import PawnMoveSetEngine from "../movement/PawnMoveSetEngine";
+import {createNullPieces} from "../TestUtils";
 
 describe("Pawn", () => {
   describe("canMoveTo", () => {
     describe("Black team", () => {
       let pawn: Pawn;
+      let moveSetEngine: PawnMoveSetEngine;
+      let pieces: Piece[][];
       beforeEach(() => {
         pawn = new Pawn(Team.Black);
+        pieces = createNullPieces();
       });
 
       it("moves down one space if it is empty", () => {
-        expect(pawn.canMoveTo(1, 1, 2, 1, new NullPiece())).toBe(true);
+        pieces[1][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(1, 1, 2, 1)).toBe(true);
       });
 
       it("cannot move up", () => {
-        expect(pawn.canMoveTo(2, 1, 1, 1, new NullPiece())).toBe(false);
+        pieces[2][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(2, 1, 1, 1)).toBe(false);
       });
 
       it("moves down two spaces if it is empty and this is the first move", () => {
-        expect(pawn.canMoveTo(1, 1, 3, 1, new NullPiece())).toBe(true);
+        pieces[1][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(1, 1, 3, 1)).toBe(true);
       });
       // It cannot move up.
 
       it("moves down one space diagonally if there is an enemy in that spot.", () => {
-        expect(pawn.canMoveTo(3, 1, 4, 2, new Bishop(Team.White))).toBe(true);
+        pieces[3][1] = pawn;
+        pieces[4][2] = new Bishop(Team.White);
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(3, 1, 4, 2)).toBe(true);
       });
 
       it("does not move down one space diagonally if there is no enemy in that spot.", () => {
-        expect(pawn.canMoveTo(3, 1, 4, 2, new NullPiece())).toBe(false);
+        pieces[3][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(3, 1, 4, 2)).toBe(false);
       });
 
       it("does not move up by 2 spaces if it's not in the starting position", () => {
-        expect(pawn.canMoveTo(1, 1, 2, 1, new NullPiece())).toBe(true);
-        expect(pawn.canMoveTo(2, 1, 4, 1, new NullPiece())).toBe(false);
+        pieces[3][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(1, 1, 2, 1)).toBe(true);
+        expect(moveSetEngine.canMoveTo(2, 1, 4, 1)).toBe(false);
       });
 
     });
 
     describe("White team", () => {
+      let moveSetEngine: PawnMoveSetEngine;
       let pawn: Pawn;
+      let pieces: Piece[][];
       beforeEach(() => {
         pawn = new Pawn(Team.White);
+        pieces = createNullPieces();
       });
 
       it("moves up one space if it is empty", () => {
-        expect(pawn.canMoveTo(6, 1, 5, 1, new NullPiece())).toBe(true);
+        pieces[6][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(6, 1, 5, 1)).toBe(true);
       });
 
       it("cannot move down", () => {
-        expect(pawn.canMoveTo(5, 1, 6, 1, new NullPiece())).toBe(false);
+        pieces[5][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(5, 1, 6, 1)).toBe(false);
       });
 
       it("moves up two spaces if it is empty and this is the first move", () => {
-        expect(pawn.canMoveTo(6, 1, 4, 1, new NullPiece())).toBe(true);
+        pieces[6][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(6, 1, 4, 1)).toBe(true);
       });
 
       it("moves up one space diagonally if there is an enemy in that spot.", () => {
-        expect(pawn.canMoveTo(4, 1, 3, 2, new Bishop(Team.Black))).toBe(true);
+        pieces[4][1] = pawn;
+        pieces[3][2] = new Bishop(Team.Black);
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(4, 1, 3, 2)).toBe(true);
       });
 
       it("does not move up one space diagonally if there is no enemy in that spot.", () => {
-        expect(pawn.canMoveTo(5, 1, 4, 2, new NullPiece())).toBe(false);
+        pieces[5][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(5, 1, 4, 2)).toBe(false);
       });
 
       it("does not move up by 2 spaces if it's not in the starting position", () => {
-        expect(pawn.canMoveTo(6, 1, 5, 1, new NullPiece())).toBe(true);
-        expect(pawn.canMoveTo(5, 1, 3, 1, new NullPiece())).toBe(false);
+        pieces[6][1] = pawn;
+        moveSetEngine = new PawnMoveSetEngine(pieces);
+        expect(moveSetEngine.canMoveTo(6, 1, 5, 1)).toBe(true);
+        expect(moveSetEngine.canMoveTo(5, 1, 3, 1)).toBe(false);
       });
 
     });
