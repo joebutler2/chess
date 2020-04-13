@@ -45,13 +45,13 @@ export default class ChessBoard
         backgroundOffset ^= 1;
         return (<tr>{
           piecesRow.map((piece: Piece | null, columnIndex: number) => {
-            const position = `${columnValues[columnIndex]}${8 - rowIndex}`
+            const position = `${columnValues[columnIndex]}${8 - rowIndex}`;
             return <td className={[
                 backgroundClasses[(columnIndex + backgroundOffset) % 2],
                 `position-${position}`
               ].join(" ")}
               onClick={this.gameRunning ? event => this.selectPiece(event, piece, position) : () => null}>
-                {piece?.icon ? piece.icon : 'foo'}
+                {piece?.icon ? piece.icon : ''}
               </td>
           })
         }</tr>);
