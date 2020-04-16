@@ -7,7 +7,7 @@ module.exports = {
   },
 
   output: {
-    filename: 'include-me.js',
+    filename: './include-me.js',
   },
 
   module: {
@@ -16,6 +16,17 @@ module.exports = {
         test:    /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
         loader:  'elm-webpack-loader?verbose=true&warn=true',
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          'style-loader',
+          // Translates CSS into CommonJS
+          'css-loader',
+          // Compiles Sass to CSS
+          'sass-loader',
+        ],
       },
     ],
 

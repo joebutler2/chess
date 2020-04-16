@@ -21,11 +21,6 @@ main =
         }
 
 
-
--- import Game and Board from core
--- We need to render at least the board
-
-
 type alias Flags =
     { pieces : Pieces }
 
@@ -84,6 +79,45 @@ update msg model =
 -- VIEW
 
 
+renderChessboard : Pieces -> List (Html Msg)
+renderChessboard pieces =
+    List.foldr (++)
+        []
+        (List.indexedMap
+            (\index pieceRow ->
+                let
+                    rowOffset =
+                        if remainderBy 2 index == 0 then
+                            1
+
+                        else
+                            0
+                in
+                [ tr [ class "piece-row" ] (renderPieceRow pieceRow rowOffset) ]
+            )
+            pieces
+        )
+
+
+renderPieceRow : List Piece -> Int -> List (Html Msg)
+renderPieceRow pieceRow rowOffset =
+    List.indexedMap (\index elem -> renderPiece elem (remainderBy 2 (index + rowOffset) == 0)) pieceRow
+
+
+renderPiece : Piece -> Bool -> Html Msg
+renderPiece piece background =
+    td
+        [ class
+            (if background then
+                "white-bg"
+
+             else
+                "black-bg"
+            )
+        ]
+        (List.singleton (text piece.icon))
+
+
 view : Model -> Html Msg
 view model =
     div [ class "chess-app" ]
@@ -91,4 +125,5 @@ view model =
             [ class "user-messages" ]
             [ text model.message ]
         , button [ onClick BtnClick ] [ text "Click me" ]
+        , table [ class "chessboard" ] (renderChessboard model.pieces)
         ]

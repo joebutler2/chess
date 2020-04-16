@@ -1,3 +1,4 @@
+import "./index.scss";
 import { Board, Piece, Game, GUI } from "core";
 
 // Using window isn't ideal but it's our only choice.
