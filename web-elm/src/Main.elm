@@ -87,16 +87,23 @@ renderChessboard pieces =
             (\index pieceRow ->
                 let
                     rowOffset =
-                        if remainderBy 2 index == 0 then
-                            1
-
-                        else
-                            0
+                        cycleBooleanInts index
                 in
                 [ tr [ class "piece-row" ] (renderPieceRow pieceRow rowOffset) ]
             )
             pieces
         )
+
+
+{-| Useful for alternating values in a loop. Like row-stripping for the chessboard.
+-}
+cycleBooleanInts : Int -> Int
+cycleBooleanInts num =
+    if modBy 2 num == 0 then
+        1
+
+    else
+        0
 
 
 renderPieceRow : List Piece -> Int -> List (Html Msg)
